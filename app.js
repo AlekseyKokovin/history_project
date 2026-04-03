@@ -220,7 +220,7 @@
 
   function copyResult() {
     const total = state.questions.length || 0;
-    const text = `Мой результат в “Мир или Правда”: ${state.score}/${total}`;
+    const text = `Мой результат в “Миф или Правда”: ${state.score}/${total}`;
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(() => {
         btnShare.textContent = "Скопировано!";
