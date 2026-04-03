@@ -265,7 +265,9 @@
 
     if (activeQuestion) {
       if (e.key.toLowerCase() === "a") answer("A");
+      if (e.key.toLowerCase() === "а") answer("A");
       if (e.key.toLowerCase() === "b") answer("B");
+      if (e.key.toLowerCase() === "в") answer("B");
       return;
     }
 
