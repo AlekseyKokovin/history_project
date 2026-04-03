@@ -45,7 +45,6 @@
 
     <main class="container">
       <section class="card app" id="app" aria-live="polite">
-        <!-- START SCREEN -->
         <div class="screen screen--active" id="screenStart">
           <div class="hero">
             <div class="pill">2 варианта • 1 правильный • объяснение</div>
@@ -77,14 +76,9 @@
                 Перемешать
               </button>
             </div>
-
-            <p class="hint">
-              Подсказка: вопросы редактируются в файле <code>questions.js</code>.
-            </p>
           </div>
         </div>
 
-        <!-- QUESTION SCREEN -->
         <div class="screen" id="screenQuestion">
           <div class="status">
             <div class="status__left">
@@ -125,7 +119,6 @@
           </div>
         </div>
 
-        <!-- RESULT SCREEN -->
         <div class="screen" id="screenResult">
           <div class="result" id="resultBox">
             <div class="result__badge" id="resultBadge">Правильно</div>
@@ -149,7 +142,6 @@
           </div>
         </div>
 
-        <!-- FINAL SCREEN -->
         <div class="screen" id="screenFinal">
           <div class="final">
             <div class="final__badge">Результат</div>
@@ -168,19 +160,9 @@
                 Скопировать результат
               </button>
             </div>
-
-            <p class="hint">
-              Хочешь другие вопросы? Открой <code>questions.js</code> и отредактируй массив <code>QUESTIONS</code>.
-            </p>
           </div>
         </div>
       </section>
-
-      <footer class="footer">
-        <span>© <span id="year"></span> • Сделано для GitHub Pages</span>
-        <span class="dot">•</span>
-        <a href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a>
-      </footer>
     </main>
 
     <script src="questions.js"></script>
