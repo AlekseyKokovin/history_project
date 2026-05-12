@@ -47,26 +47,125 @@
     <section class="card app" id="app" aria-live="polite">
         <div class="screen screen--active" id="screenStart">
             <div class="hero">
-                <div class="pill">2 варианта • 1 правильный • объяснение</div>
+                <div class="pill">Одиночная игра • live-игра по ссылке • таблица результатов</div>
                 <h1 class="hero__title">Игра: <span class="grad">Миф</span> или <span class="grad2">Правда</span>?</h1>
                 <p class="hero__desc">
-                    Отвечай быстро: выбирай один из двух вариантов. После ответа — короткое объяснение.
+                    Играй один в готовых категориях или создай live-игру из разных тем, чтобы участники присоединились по ссылке или QR-коду.
                 </p>
 
                 <div class="hero__meta">
                     <div class="meta">
                         <div class="meta__k">Вопросов</div>
-                        <div class="meta__v" id="metaTotal">25</div>
+                        <div class="meta__v" id="metaTotal">20</div>
+                    </div>
+                    <div class="meta">
+                        <div class="meta__k">Категорий</div>
+                        <div class="meta__v" id="metaCategories">3</div>
+                    </div>
+                    <div class="meta">
+                        <div class="meta__k">Режим</div>
+                        <div class="meta__v" id="metaMode">соло / live</div>
                     </div>
                 </div>
                 <div class="hero__actions">
                     <button class="btn btn--primary" id="btnStart" type="button">
-                        Начать
+                        Все темы
                     </button>
                     <button class="btn btn--ghost" id="btnShuffle" type="button" title="Перемешать вопросы">
-                        Перемешать
+                        Случайный микс
+                    </button>
+                    <button class="btn btn--ghost" id="btnOpenCreate" type="button">
+                        Создать игру
                     </button>
                 </div>
+
+                <div class="notice" id="importNotice" hidden></div>
+
+                <div class="default-games">
+                    <div class="section-heading">
+                        <div>
+                            <h2>Готовые одиночные игры</h2>
+                            <p>Выбери категорию и играй сразу.</p>
+                        </div>
+                    </div>
+                    <div class="category-grid" id="categoryList"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="screen" id="screenCreate">
+            <div class="builder">
+                <div class="screen-head">
+                    <div>
+                        <div class="pill">Организатор</div>
+                        <h2 class="screen-head__title">Создать игру</h2>
+                        <p class="screen-head__text">Выбери темы, количество вопросов и отправь участникам live-ссылку или QR-код.</p>
+                    </div>
+                    <button class="btn btn--ghost" id="btnBackFromCreate" type="button">На старт</button>
+                </div>
+
+                <div class="form-grid">
+                    <label class="form-field">
+                        <span class="form-label">Название игры</span>
+                        <input class="input" id="gameTitle" type="text" maxlength="60" value="Исторический батл"/>
+                    </label>
+                    <label class="form-field">
+                        <span class="form-label">Имя организатора</span>
+                        <input class="input" id="hostName" type="text" maxlength="32" placeholder="Например, Alex"/>
+                    </label>
+                    <label class="form-field">
+                        <span class="form-label">Количество вопросов</span>
+                        <input class="input" id="questionLimit" type="number" min="1" value="10"/>
+                    </label>
+                </div>
+
+                <div class="form-field">
+                    <div class="form-label">Темы</div>
+                    <div class="topic-list" id="createCategories"></div>
+                </div>
+
+                <div class="builder__actions">
+                    <button class="btn btn--primary" id="btnCreateGame" type="button">Создать live-игру</button>
+                    <button class="btn btn--ghost" id="btnStartHost" type="button" disabled>Играть как участник</button>
+                </div>
+
+                <div class="notice notice--error" id="createStatus" hidden></div>
+
+                <div class="share-panel" id="sharePanel" hidden>
+                    <div class="share-panel__main">
+                        <label class="form-field">
+                            <span class="form-label">Ссылка для участников</span>
+                            <input class="input input--readonly" id="shareLink" type="text" readonly/>
+                        </label>
+                        <div class="share-panel__actions">
+                            <button class="btn btn--primary" id="btnCopyLink" type="button">Скопировать ссылку</button>
+                        </div>
+                        <p class="share-panel__hint" id="shareHint"></p>
+                    </div>
+                    <div class="qr-box">
+                        <img id="qrImage" alt="QR-код для входа в игру"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="screen" id="screenJoin">
+            <div class="join">
+                <div class="pill">Игра по ссылке</div>
+                <h2 class="join__title" id="joinTitle">...</h2>
+                <p class="join__summary" id="joinSummary">...</p>
+
+                <label class="form-field">
+                    <span class="form-label">Твоё имя в таблице</span>
+                    <input class="input" id="playerName" type="text" maxlength="32" placeholder="Игрок"/>
+                </label>
+
+                <div class="join__actions">
+                    <button class="btn btn--primary" id="btnJoinGame" type="button">Войти в игру</button>
+                    <button class="btn btn--ghost" id="btnJoinBack" type="button">На старт</button>
+                </div>
+
+                <div class="leaderboard" id="joinLeaderboard" hidden></div>
             </div>
         </div>
 
@@ -88,7 +187,7 @@
 
             <div class="question">
                 <div class="question__card">
-                    <div class="question__label">Вопрос</div>
+                    <div class="question__label" id="questionCategory">Вопрос</div>
                     <h2 class="question__title" id="questionText">...</h2>
                     <div class="question__sub" id="questionSub">Выбери вариант</div>
 
@@ -118,6 +217,11 @@
                 <div class="result__explain">
                     <div class="result__label">Объяснение</div>
                     <p class="result__text" id="resultText">...</p>
+
+                    <div class="result__sources" id="resultSources" hidden>
+                        <div class="result__label">Источники</div>
+                        <ul class="result__sourcesList" id="resultSourcesList"></ul>
+                    </div>
                 </div>
 
                 <div class="result__actions">
@@ -150,7 +254,12 @@
                     <button class="btn btn--ghost" id="btnShare" type="button" title="Скопировать результат">
                         Скопировать результат
                     </button>
+                    <button class="btn btn--ghost" id="btnFinalHome" type="button">
+                        На главный экран
+                    </button>
                 </div>
+
+                <div class="leaderboard" id="leaderboardBox" hidden></div>
             </div>
         </div>
     </section>
